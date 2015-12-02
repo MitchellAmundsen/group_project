@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('PoliticalApp', ['ngSanitize', 'ui.router', 'ui.bootstrap'])
+angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap'])
 .config(function($stateProvider){
 	$stateProvider
 		.state('politicalfeed', {
@@ -19,4 +19,20 @@ angular.module('PoliticalApp', ['ngSanitize', 'ui.router', 'ui.bootstrap'])
 			controller: 'StatisticsCtrl'
 		})
 
+})
+.controller('FeedCtrl', ['$scope', '$http', function($scope, $http) {
+
+}])
+
+.controller('PollCtrl', ['$scope', '$http', function($scope, $http) {
+
+}])
+
+.controller('StatisticsCtrl', ['$scope', '$http', function($scope, $http) {
+
+}])
+.config(function($urlRouterProvider){
+    // if the path doesn't match any of the urls you configured
+    // otherwise will take care of routing the user to the specified url
+    $urlRouterProvider.otherwise('/');
 })
