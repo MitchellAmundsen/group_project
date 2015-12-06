@@ -1,5 +1,4 @@
 
-
 <div class="row" ng-controller="FeedCtrl">
 	<div class="col-md-3">
 		Left column
@@ -12,6 +11,8 @@
 	</div>
 	<div class="col-md-9">
 		
+	<!-- Here we will be showing the twitter feeds of each of the candidates that are selected. We need to choose a default though, so there isnt a bunch of blank space. -->
+
 		<div ng-if="politician && politician == 'obama'" twitter-timeline="672639914727485442" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
 
 		<div ng-if="politician && politician == 'clinton'" twitter-timeline="673305483248177153" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
@@ -30,5 +31,3 @@
 	<div class="col-md-2"></div>
 <div class="row">
 </div>
-
-
