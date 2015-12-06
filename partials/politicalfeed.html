@@ -1,0 +1,34 @@
+
+
+<div class="row" ng-controller="FeedCtrl">
+	<div class="col-md-3">
+		Left column
+		<div class="form-group">
+			<label><input type="radio" name="politician" ng-model="politician" value="obama"> Barack Obama</label><br>
+			<label><input type="radio" name="politician" ng-model="politician" value="clinton"> Hillary Clinton</label><br>
+			<label><input type="radio" name="politician" ng-model="politician" value="palin"> Sarah Palin</label><br>
+			<label><input type="radio" name="politician" ng-model="politician" value="trump"> Donald Trump</label>
+		</div>
+	</div>
+	<div class="col-md-9">
+		
+		<div ng-if="politician && politician == 'obama'" twitter-timeline="672639914727485442" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+
+		<div ng-if="politician && politician == 'clinton'" twitter-timeline="673305483248177153" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+
+		<div ng-if="politician && politician == 'palin'" twitter-timeline="673306541303271424" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+
+		<div ng-if="politician && politician == 'trump'" twitter-timeline="673290158930706432" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+
+
+
+
+		
+
+		
+	</div>
+	<div class="col-md-2"></div>
+<div class="row">
+</div>
+
+

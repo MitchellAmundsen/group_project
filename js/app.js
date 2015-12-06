@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap'])
+angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline'])
 .config(function($stateProvider){
 	$stateProvider
 		.state('politicalfeed', {
@@ -20,7 +20,10 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap'])
 		})
 
 })
-.controller('FeedCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('FeedCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
+	//need to figure out how to get widget to always appear upon state change...refreshing page works?
+	//$window.location.reload();
+	console.log($scope.politician);
 
 }])
 
