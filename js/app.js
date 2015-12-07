@@ -61,7 +61,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 		}
 	];
 
-	var candidateData = [
+	var candidateData = {
 		labels: ["Bernie Sanders", "Hilary Clinton", "Donald Trump", "Ted Cruz", "Marco Rubio"],
 		datasets: [
 			{
@@ -84,7 +84,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 				data: [71, 94, 10, 18, 39]
 			}
 		]
-	]
+	}
 
 }])
 .config(function($urlRouterProvider){
