@@ -107,16 +107,19 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
  		$scope.candidates = response.data;
  	});
 
- 	$http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-democratic-primary').then(function(response){
- 		$scope.democraticPoll = response.data;
- 	})
+ 	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-democratic-primary').then(function(response){
+ 	// 	$scope.democraticPoll = response.data;
+ 	// })
 
- 	$http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-gop-primary').then(function(response){
- 		$scope.republicanPoll = response.data;
- 	})
+ 	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-gop-primary').then(function(response){
+ 	// 	$scope.republicanPoll = response.data;
+ 	// })
 
- 	console.log($scope.republicanPoll);
- 	console.log($scope.democraticPoll);
+	$http.get('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+		$scope.pollData = response.data;
+	});
+
+ 	console.log($scope.pollData);
 
 
 }])
