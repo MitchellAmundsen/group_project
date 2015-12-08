@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline'])
+angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline', 'firebase'])
 .config(function($stateProvider){
 	$stateProvider
 		.state('politicalfeed', {
@@ -27,7 +27,23 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 
 }])
 
-.controller('PollCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('PollCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$firebaseAuth', function($scope, $firebaseObject, $firebaseArray, $firebaseAuth) {
+	var ref = new Firebase("https://politweets.firebaseio.com/");
+	var pollRef = ref.child("polls");
+
+	$scope.polls = $firebaseObject(pollRef);
+
+	var obj = {
+		title: 'asdfg',
+		choices: {
+			title: "Choice 2",
+			value: 2
+		}
+	};
+	$scope.addPoll = function() {
+		$scope.polls.$add(obj);
+	}
+	$scope.addPoll();
 
 
 }])
@@ -84,7 +100,32 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 				data: [71, 94, 10, 18, 39]
 			}
 		]
-	}
+	};
+
+	// grab CandidateData
+	$http.get('data/candidates.json').then(function(response) {
+ 		$scope.candidates = response.data;
+ 	});
+
+ 	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-democratic-primary').then(function(response){
+ 	// 	$scope.democraticPoll = response.data;
+ 	// })
+
+ 	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-gop-primary').then(function(response){
+ 	// 	$scope.republicanPoll = response.data;
+ 	// })
+
+	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+	// 	$scope.pollData = response.data;
+	// });
+
+	$http.get('data/polls.json').then(function(response) {
+		$scope.pollData = response.data;
+		console.log($scope.pollData);
+	});
+
+ 	
+
 
 }])
 .config(function($urlRouterProvider){

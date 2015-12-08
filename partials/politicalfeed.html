@@ -1,4 +1,5 @@
 
+<h1 id="title">Welcome to PoliTweets!</h1>
 <div class="row" ng-controller="FeedCtrl">
 	<div class="col-md-3">
 		Left column
@@ -13,13 +14,13 @@
 		
 	<!-- Here we will be showing the twitter feeds of each of the candidates that are selected. We need to choose a default though, so there isnt a bunch of blank space. -->
 
-		<div ng-if="politician && politician == 'obama'" twitter-timeline="672639914727485442" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+		<div ng-if="politician == 'obama'" twitter-timeline="672639914727485442" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
 
-		<div ng-if="politician && politician == 'clinton'" twitter-timeline="673305483248177153" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+		<div ng-if="politician == 'clinton'" twitter-timeline="673305483248177153" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
 
-		<div ng-if="politician && politician == 'palin'" twitter-timeline="673306541303271424" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+		<div ng-if="politician == 'palin'" twitter-timeline="673306541303271424" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
 
-		<div ng-if="politician && politician == 'trump'" twitter-timeline="673290158930706432" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
+		<div ng-if="politician == 'trump'" twitter-timeline="673290158930706432" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
 
 
 
