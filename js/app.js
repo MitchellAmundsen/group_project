@@ -31,20 +31,27 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
 	var ref = new Firebase("https://politweets.firebaseio.com/");
 	var pollRef = ref.child("polls");
 
-	$scope.polls = $firebaseObject(pollRef);
+	$scope.polls = $firebaseArray(pollRef);
 
-	var obj = {
-		title: 'asdfg',
-		choices: {
-			title: "Choice 2",
-			value: 2
-		}
-	};
+	
 	$scope.addPoll = function() {
-		$scope.polls.$add(obj);
+		$scope.polls.$add({
+			pollName: $scope.pollHeader,
+			choices: [{
+				text: $scope.choice1,
+				value: 0
+			}, {
+				text: $scope.choice2,
+				value: 0
+			}, {
+				text: $scope.choice3,
+				value: 0
+			}, {
+				text: $scope.choice4,
+				value: 0
+			}]
+		})
 	}
-	$scope.addPoll();
-
 
 }])
 
