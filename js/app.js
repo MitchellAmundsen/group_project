@@ -86,6 +86,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 		]
 	}
 
+	// grab CandidateData
+	$http.get('data/candidates.json').then(function(response) {
+ 		$scope.candidates = response.data;
+ 	});
+
 }])
 .config(function($urlRouterProvider){
     // if the path doesn't match any of the urls you configured
