@@ -84,7 +84,8 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 				data: [71, 94, 10, 18, 39]
 			}
 		]
-	}
+	};
+
 
 }])
 .config(function($urlRouterProvider){
