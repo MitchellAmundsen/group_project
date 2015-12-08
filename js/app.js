@@ -86,6 +86,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 		]
 	};
 
+
 }])
 .config(function($urlRouterProvider){
     // if the path doesn't match any of the urls you configured
