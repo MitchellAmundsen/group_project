@@ -115,11 +115,16 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
  	// 	$scope.republicanPoll = response.data;
  	// })
 
-	$http.get('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+	// 	$scope.pollData = response.data;
+	// });
+
+	$http.get('data/polls.json').then(function(response) {
 		$scope.pollData = response.data;
+		console.log($scope.pollData);
 	});
 
- 	console.log($scope.pollData);
+ 	
 
 
 }])
