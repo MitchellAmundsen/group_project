@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline'])
+angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline', 'firebase'])
 .config(function($stateProvider){
 	$stateProvider
 		.state('politicalfeed', {
@@ -27,7 +27,23 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 
 }])
 
-.controller('PollCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('PollCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$firebaseAuth', function($scope, $firebaseObject, $firebaseArray, $firebaseAuth) {
+	var ref = new Firebase("https://politweets.firebaseio.com/");
+	var pollRef = ref.child("polls");
+
+	$scope.polls = $firebaseObject(pollRef);
+
+	var obj = {
+		title: 'asdfg',
+		choices: {
+			title: "Choice 2",
+			value: 2
+		}
+	};
+	$scope.addPoll = function() {
+		$scope.polls.$add(obj);
+	}
+	$scope.addPoll();
 
 
 }])
