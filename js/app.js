@@ -90,10 +90,10 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
 			{
 				label: "Poll Numbers",
 				// all colors should be changed to more appropriate political colors
-				fillColor: "#FF782B",
-				strokeColor: "#FF5D00",
-				highlightFill: "#FF9A41",
-				highlightStroke: "#FF902F",
+				fillColor: "#E72020",
+				strokeColor: "#AD0000",
+				highlightFill: "#EE6262",
+				highlightStroke: "#EA4141",
 				// values dependent on api
 				data: [93, 93, 37, 57, 74]
 			},
@@ -114,25 +114,14 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
  		$scope.candidates = response.data;
  	});
 
- 	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-democratic-primary').then(function(response){
- 	// 	$scope.democraticPoll = response.data;
- 	// })
-
- 	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls/2016-national-gop-primary').then(function(response){
- 	// 	$scope.republicanPoll = response.data;
- 	// })
-
-	// $http.get('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
-	// 	$scope.pollData = response.data;
-	// });
-
-	$http.get('data/polls.json').then(function(response) {
+	$http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
 		$scope.pollData = response.data;
 		console.log($scope.pollData);
 	});
 
- 	
 
+	var chart = new Chart(percentGraph).Doughnut(percentData);
+	var chart2 = new Chart(candidateBar).Bar(candidateData);
 
 }])
 .config(function($urlRouterProvider){
