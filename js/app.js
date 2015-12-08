@@ -86,11 +86,14 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 		]
 	};
 
+<<<<<<< HEAD
 
 	// grab CandidateData
 	$http.get('data/candidates.json').then(function(response) {
  		$scope.candidates = response.data;
  	});
+=======
+>>>>>>> aafdbade26deb8608cf61581c1bbbd9884fd22cb
 
 }])
 .config(function($urlRouterProvider){
