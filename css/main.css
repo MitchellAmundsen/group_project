@@ -2,17 +2,15 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
 
-@media screen and (min-width: 768px) {
-
-
+.navbar {
+	background-color: #4099FF;
+	font-weight: bold;
 }
 
-@media screen and (min-width: 992px) {
-
+.navbar-default .navbar-nav>li>a {
+	color: white;
 }
 
-
-@media screen and (min-width: 1200px) {
-
-
-}	
+.navbar-default .navbar-brand {
+	color: white;
+}
