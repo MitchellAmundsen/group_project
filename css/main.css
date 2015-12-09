@@ -4,6 +4,14 @@
 
 .navbar {
 	background-color: #4099FF;
-	color: white;
 	font-weight: bold;
 }
+
+.navbar-default .navbar-nav>li>a {
+	color: white;
+}
+
+.navbar-default .navbar-brand {
+	color: white;
+}
+

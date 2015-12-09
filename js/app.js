@@ -17,7 +17,7 @@ window.twttr = (function(d, s, id) {
 	  return t;
   }(document, "script", "twitter-wjs"));
 
-angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline'])
+angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 .config(function($stateProvider){
 	$stateProvider
 		.state('politicalfeed', {
@@ -59,8 +59,31 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
     }
 }])
 
-.controller('PollCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('PollCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$firebaseAuth', function($scope, $firebaseObject, $firebaseArray, $firebaseAuth) {
+	var ref = new Firebase("https://politweets.firebaseio.com/");
+	var pollRef = ref.child("polls");
 
+	$scope.polls = $firebaseArray(pollRef);
+
+	
+	$scope.addPoll = function() {
+		$scope.polls.$add({
+			pollName: $scope.pollHeader,
+			choices: [{
+				text: $scope.choice1,
+				value: 0
+			}, {
+				text: $scope.choice2,
+				value: 0
+			}, {
+				text: $scope.choice3,
+				value: 0
+			}, {
+				text: $scope.choice4,
+				value: 0
+			}]
+		})
+	}
 
 }])
 
@@ -98,10 +121,10 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 			{
 				label: "Poll Numbers",
 				// all colors should be changed to more appropriate political colors
-				fillColor: "#FF782B",
-				strokeColor: "#FF5D00",
-				highlightFill: "#FF9A41",
-				highlightStroke: "#FF902F",
+				fillColor: "#E72020",
+				strokeColor: "#AD0000",
+				highlightFill: "#EE6262",
+				highlightStroke: "#EA4141",
 				// values dependent on api
 				data: [93, 93, 37, 57, 74]
 			},
@@ -122,6 +145,14 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
  		$scope.candidates = response.data;
  	});
 
+	$http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+		$scope.pollData = response.data;
+		console.log($scope.pollData);
+	});
+
+
+	var chart = new Chart(percentGraph).Doughnut(percentData);
+	var chart2 = new Chart(candidateBar).Bar(candidateData);
 
 }])
 .config(function($urlRouterProvider){

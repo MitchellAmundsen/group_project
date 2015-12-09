@@ -1,7 +1,33 @@
+<div class="container">
+	<form class="well">
+		<div class="form-group">
+			<label for="pollHeader">Poll Header:</label>
+			<input name="pollHeader" ng-model="pollHeader" class="form-control" required>
+		</div>
 
+		<div class="form-group">
+			<label for "choice1">Choice1</label>
+			<input type="radio" name="choice1" ng-model="choice1" required>
+		</div>
+		<div class="form-group">
+			<label for "choice2">Choice2</label>
+			<input type="radio" name="choice2" ng-model="choice2" required>
+		</div>
+		<div class="form-group">
+			<label for "choice3">Choice3</label>
+			<input type="radio" name="choice3" ng-model="choice3" required>
+		</div>
+		<div class="form-group">
+			<label for "choice4">Choice4</label>
+			<input type="radio" name="choice4" ng-model="choice4" required>
+		</div>
 
-<!-- not sure if we need to have varying canvas sizes or if that is implementable -->
-<canvas id="percentages" width="256" height"256"></canvas>
+		<button ng-click="addPoll()">Submit</button>
+	</form>
+</div>
 
-<!-- for showing a large number of candidates (number of votes?) -->
-<canvas id="candidates" width="600" height="400"></canvas>
+<div class="container">
+	<div ng-repeat="poll in polls">
+		{{poll.pollName}}
+	</div>
+</div>
