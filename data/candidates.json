@@ -3,90 +3,105 @@
 		"Name": "Hillary Clinton",
 		"Party": "Democrat",
 		"Twitter": "http://twitter.com/hillaryclinton",
-		"Age": "69"
+		"Age": "69",
+		"WidgetID": "673305483248177153"
 	},
 	{
 		"Name": "Bernie Sanders",
 		"Party": "Democrat",
 		"Twitter": "http://twitter.com/SenSanders",
-		"Age": "75"
+		"Age": "75",
+		"WidgetID": "674315135821807616"
 	},
 	{
 		"Name": "Martin O'Malley",
 		"Party": "Democrat",
 		"Twitter": "http://twitter.com/GovernorOMalley",
-		"Age": "54"
+		"Age": "54",
+		"WidgetID": "674315900174991364"
 	},
 	{
 		"Name": "Jeb Bush",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/JebBush",
-		"Age": "63"
+		"Age": "63",
+		"WidgetID": "674316083675852800"
 	},
 	{
 		"Name": "Ben Carson",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/RealBenCarson",
-		"Age": "65"
+		"Age": "65",
+		"WidgetID": "674316239489994753"
 	},
 	{
 		"Name": "Chris Christie",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/GovChristie",
-		"Age": "54"
+		"Age": "54",
+		"WidgetID": "674316393379053568"
 	},
 	{
 		"Name": "Ted Cruz",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/tedcruz",
-		"Age": "46"
+		"Age": "46",
+		"WidgetID": "674316556399022080"
 	},
 	{
 		"Name": "Carly Fiorina",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/CarlyFiorina",
-		"Age": "62"
+		"Age": "62",
+		"WidgetID": "674316701798809602"
 	},
 	{
 		"Name": "Lindsey Graham",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/LindseyGrahamSC",
-		"Age": "61"
+		"Age": "61",
+		"WidgetID": "674316856287621121"
 	},
 	{
 		"Name": "Mike Huckabee",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/govmikehuckabee",
-		"Age": "61"
+		"Age": "61",
+		"WidgetID": "674317068376793088"
 	},
 	{
 		"Name": "John Kasich",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/JohnKasich",
-		"Age": "64"
+		"Age": "64",
+		"WidgetID": "674317212098756611"
 	},
 	{
 		"Name": "Rand Paul",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/RandPaul",
-		"Age": "54"
+		"Age": "54",
+		"WidgetID": "674317376809099264"
 	},
 	{
 		"Name": "Marco Rubio",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/MarcoRubio",
-		"Age": "45"
+		"Age": "45",
+		"WidgetID": "674317511769251840"
 	},
 	{
 		"Name": "Rick Santorum",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/ricksantorum",
-		"Age": "58"
+		"Age": "58",
+		"WidgetID": "674317678559948802"
 	},
 	{
 		"Name": "Donald Trump",
 		"Party": "Republican",
 		"Twitter": "http://twitter.com/realdonaldtrump",
-		"Age": "70"
+		"Age": "70",
+		"WidgetID": "674317800769359872"
 	}
 ]

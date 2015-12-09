@@ -1,5 +1,22 @@
 'use strict';
 
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+	  return t;
+  }(document, "script", "twitter-wjs"));
+
 angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline'])
 .config(function($stateProvider){
 	$stateProvider
@@ -20,11 +37,26 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 		})
 
 })
-.controller('FeedCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
-	//need to figure out how to get widget to always appear upon state change...refreshing page works?
-	//$window.location.reload();
-	console.log($scope.politician);
 
+.controller('FeedCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
+	$http.get('/data/candidates.json')
+       .then(function(res){
+          $scope.candidates = res.data;                
+        }); 
+    $scope.loadWidgets = function(ID){
+    	var currTimeline = angular.element( document.querySelector( '#timeline' ) );
+		currTimeline.empty();
+    	twttr.widgets.createTimeline(
+		  ID,
+		  document.getElementById('timeline'),
+		  {
+		    width: '700',
+		    height: '1000',
+		    related: 'twitterdev,twitterapi'
+		  }).then(function (el) {
+		    console.log("Timeline updated.")
+		  });
+    }
 }])
 
 .controller('PollCtrl', ['$scope', '$http', function($scope, $http) {
@@ -32,9 +64,8 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline']
 
 }])
 
-.controller('StatisticsCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('StatisticsCtrl', ['$scope', '$http', 'tweetWidgets', function($scope, $http, tweetWidgets) {
 	// want to find a way where buttons change values appearring on chart
-
 	var percentGraph = $("#percentages").get(0).getContext("2d");
 	var candidateBar = $("#candidates").get(0).getContext("2d");
 
