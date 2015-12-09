@@ -87,7 +87,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 
 }])
 
-.controller('StatisticsCtrl', ['$scope', '$http', 'tweetWidgets', function($scope, $http, tweetWidgets) {
+.controller('StatisticsCtrl', ['$scope', '$http', function($scope, $http) {
 	// want to find a way where buttons change values appearring on chart
 	var percentGraph = $("#percentages").get(0).getContext("2d");
 	var candidateBar = $("#candidates").get(0).getContext("2d");
