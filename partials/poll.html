@@ -27,7 +27,10 @@
 </div>
 
 <div class="container">
-	<div ng-repeat="poll in polls">
-		{{poll.pollName}}
+	<div ng-repeat="poll in polls" class="pollStuff well">
+		<h2>{{poll.pollName}}</h2>
+		<label ng-repeat="choice in poll.choices">
+			<input type="radio" ng-click="addValue(choice)"> {{choice.text}}
+		</label>
 	</div>
 </div>

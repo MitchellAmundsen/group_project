@@ -84,6 +84,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		})
 	}
 
+	$scope.addValue = function(choice) {
+		choice.value = choice.value + 1;
+		$scope.polls.$save();
+	};
+
 }])
 
 .controller('StatisticsCtrl', ['$scope', '$http', function($scope, $http) {
