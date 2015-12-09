@@ -51,8 +51,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		  document.getElementById('timeline'),
 		  {
 		    width: '700',
-		    height: '1000',
-		    related: 'twitterdev,twitterapi'
+		    height: '2000',
 		  }).then(function (el) {
 		    console.log("Timeline updated.")
 		  });

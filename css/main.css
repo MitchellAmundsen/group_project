@@ -15,3 +15,34 @@
 	color: white;
 }
 
+#democrats {
+	color: blue;
+}
+
+#republicans {
+	color: red;
+}
+
+#politweets {
+	color: white;
+}
+
+#outershell {
+	background-color: #4099FF;
+	-moz-border-radius: 6px; 
+ 	border-radius: 6px; /* standards-compliant: (IE) */ 
+ 	width: 350px;
+}
+
+#welcome {
+	padding: 7px;
+	-moz-border-radius: 6px 6px 0 0;
+ 	border-radius: 6px 6px 0 0; /* standards-compliant: (IE) */
+}
+
+.form-group{
+	background-color: lightgray;
+	padding: 10px;
+	-moz-border-radius: 6px 6px 0 0;
+ 	border-radius: 6px 6px 0 0; /* standards-compliant: (IE) */
+}
