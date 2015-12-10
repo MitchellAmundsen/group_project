@@ -166,6 +166,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	var chart2 = new Chart(candidateBar).Bar(candidateData);
 
 }])
+
+.controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
+
+}])
+
 .config(function($urlRouterProvider){
     // if the path doesn't match any of the urls you configured
     // otherwise will take care of routing the user to the specified url

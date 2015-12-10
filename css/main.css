@@ -32,6 +32,11 @@
 	font-family: Lobster
 }
 
+#politweets-black {
+	color: black;
+	font-family: Lobster
+}
+
 #outershell {
 	background-color: #4099FF;
 	-moz-border-radius: 6px; 
