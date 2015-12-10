@@ -46,6 +46,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
     $scope.loadWidgets = function(ID){
     	var currTimeline = angular.element( document.querySelector( '#timeline' ) );
 		currTimeline.empty();
+		
     	twttr.widgets.createTimeline(
 		  ID,
 		  document.getElementById('timeline'),
