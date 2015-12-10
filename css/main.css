@@ -85,6 +85,18 @@ body {
 	display: inline-block;
 }
 
+#overview {
+	font-size: 24px;
+}
+
+#stories-title {
+	font-size: 22px;
+}
+
+#stories {
+	font-size: 20px;
+}
+
 #footer {
 	position: absolute;
 	padding: 1rem;
