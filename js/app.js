@@ -20,8 +20,13 @@ window.twttr = (function(d, s, id) {
 angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 .config(function($stateProvider){
 	$stateProvider
+		.state('home', {
+		url: '/', //"root" directory
+		templateUrl: 'partials/home.html',
+		controller: 'HomeCtrl'
+		})
 		.state('politicalfeed', {
-			url: '/', //"root" directory
+			url: '/feed', //"root" directory
 			templateUrl: 'partials/politicalfeed.html',
 			controller: 'FeedCtrl'
 		})
