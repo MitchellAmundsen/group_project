@@ -94,7 +94,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		var loc = $scope.polls.indexOf(poll);
 		var a = $scope.polls[loc].options.indexOf(option);
 		console.log($scope.polls[loc].options[a][1]);
-		var new $scope.polls[loc].options[a][1] + 1;
+		$scope.polls[loc].options[a][1] += 1;
 		$scope.polls.$save();
 	};
 
