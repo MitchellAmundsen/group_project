@@ -1,7 +1,6 @@
 <!-- not sure if we need to have varying canvas sizes or if that is implementable -->
 <div class="container">
-	<select id="chooseChart" ngChange="indexChange()">
-		<option value="national">National Poll</option>
+	<select id="chooseChart" ng-model="select" ng-Change="indexChange()">
 		<option value="democratic">Democratic Polls</option>
 		<option value="republican">Republican Polls</option>
 		<option value="demOH">Ohio Democratic Polls</option>

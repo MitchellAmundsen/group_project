@@ -118,6 +118,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	var name2 = "Candidate 2"
 	var name3 = "Candidate 3"
 
+
 	var percentData = [
 		{
 			// import candidate values and name via API
@@ -151,8 +152,22 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 			highlight: "#5151FF",
 			label: "Other"
 		}
-
 	];
+
+	var updateGraph = function(val1, val2, val3, val4, val5, name1, name2, name3){
+		percentData[0].value = val1;
+		percentData[1].value = val2;
+		percentData[2].value = val3;
+		percentData[3].value = val4;
+		percentData[4].value = val5;
+		percentData[0].name = name1;
+		percentData[1].name = name2;
+		percentData[2].name = name3;
+
+		//chart.update();
+
+		chart = new Chart(percentGraph).Doughnut(percentData);
+	}
 
 	var candidateData = {
 		labels: ["Bernie Sanders", "Hilary Clinton", "Donald Trump", "Ted Cruz", "Marco Rubio"],
@@ -236,15 +251,17 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 			currentSelect = $scope.gopOH;
 		}
 
-		var1 = currentSelect.estimates[0].value;
-		var2 = currentSelect.estimates[1].value;
-		var3 = currentSelect.estimates[2].value;
-		var4 = currentSelect.estimates[3].value;
-		var5 = currentSelect.estimates[4].value;
+		val1 = currentSelect.estimates[0].value;
+		val2 = currentSelect.estimates[1].value;
+		val3 = currentSelect.estimates[2].value;
+		val4 = currentSelect.estimates[3].value;
+		val5 = currentSelect.estimates[4].value;
+		name1 = currentSelect.estimates[0].choice;
+		name2 = currentSelect.estimates[1].choice;
+		name3 = currentSelect.estimates[2].choice;
 
-		chart = new Chart(percentGraph).Doughnut(percentData);
-
-		console.log("test");
+		console.log(val1);
+		updateGraph(val1, val2, val3, val4, val5, name1, name2, name3);
 	}
 
 }])
