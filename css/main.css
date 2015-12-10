@@ -98,6 +98,18 @@ body {
 	width: 100%;
 }
 
+#thanks {
+	float: right;
+}
+
+.joel {
+	color: red;	
+}
+
+.joel:hover {
+	color: white;
+}
+
 .rdos {
 	width: 100%;
 }
