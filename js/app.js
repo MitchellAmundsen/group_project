@@ -73,28 +73,29 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	
 	$scope.addPoll = function() {
 		$scope.polls.$add({
-			pollName: $scope.pollHeader,
-			choices: [{
-				text: $scope.choice1,
-				value: 0
+			name: $scope.pollHeader,
+			options: [{
+				0: $scope.choice1,
+				1: 0
 			}, {
-				text: $scope.choice2,
-				value: 0
+				0: $scope.choice2,
+				1: 0
 			}, {
-				text: $scope.choice3,
-				value: 0
+				0: $scope.choice3,
+				1: 0
 			}, {
-				text: $scope.choice4,
-				value: 0
-			}]
+				0: $scope.choice4,
+				1: 0
+			}],
 		})
 	}
 
-	//doesn't save it to firebase yet. Trying to get it to work.
-	$scope.addValue = function(choice) {
-		console.log(choice);
-		choice.value += 1;
-		$scope.polls.$save(choice);
+	$scope.addValue = function(option, poll) {
+		var loc = $scope.polls.indexOf(poll);
+		var a = $scope.polls[loc].options.indexOf(option);
+		console.log($scope.polls[loc].options[a][1]);
+		$scope.polls[loc].options[a][1] += 1;
+		$scope.polls.$save();
 	};
 
 }])
