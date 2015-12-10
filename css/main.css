@@ -8,6 +8,7 @@ body {
 
 .container {
 	background-color: white;
+	border-radius: 25px;
 }
 
 .navbar {
@@ -67,4 +68,13 @@ body {
 .pollStuff {
 	width: 30%;
 	display: inline-block;
+}
+
+#footer {
+	position: fixed;
+	bottom: 0;
+	background-color: #4099FF;
+	color: white;
+	border-radius: 0px;
+	width: 100%;
 }
