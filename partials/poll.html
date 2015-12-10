@@ -28,9 +28,12 @@
 
 <div class="container">
 	<div ng-repeat="poll in polls" class="pollStuff well">
-		<h2>{{poll.pollName}}</h2>
-		<label ng-repeat="choice in poll.choices">
-			<input type="radio" ng-click="addValue(choice)"> {{choice.text}}
-		</label>
+		<form>
+			<h2>{{poll.pollName}}</h2>
+			<label ng-repeat="choice in poll.choices" class="rdos polls">
+				<input type="radio" ng-model="$parent.name" ng-value="{{choice.name}}" required> {{choice.text}}
+			</label>
+			<button ng-click="addValue()">Submit</button>
+		</form>
 	</div>
 </div>

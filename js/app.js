@@ -92,8 +92,9 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 
 	//doesn't save it to firebase yet. Trying to get it to work.
 	$scope.addValue = function(choice) {
-		choice.value = choice.value + 1;
-		$scope.polls.$save();
+		console.log(choice);
+		choice.value += 1;
+		$scope.polls.$save(choice);
 	};
 
 }])

@@ -4,10 +4,10 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			<h3 id="democrats">Democrats</h3>
-			<label ng-repeat="candidate in candidates | filter: Party = 'Democrat'">
+			<label ng-repeat="candidate in candidates | filter: Party = 'Democrat'" class="rdos">
 				<input type="radio" name="politician" ng-model="$parent.currentCandidate" ng-value="candidate" ng-change="loadWidgets($parent.currentCandidate.WidgetID)">&emsp;{{candidate.Name}}&emsp;</label><br>
 			<h3 id="republicans">Republicans</h3>
-			<label ng-repeat="candidate in candidates | filter: Party = 'Republican'">
+			<label ng-repeat="candidate in candidates | filter: Party = 'Republican'" class="rdos">
 				<input type="radio" name="politician" ng-model="$parent.currentCandidate" ng-value="candidate" ng-change="loadWidgets($parent.currentCandidate.WidgetID)">&emsp;{{candidate.Name}}&emsp;</label>
 
 		</div>
