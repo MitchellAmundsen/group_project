@@ -1,34 +1,26 @@
-
-<h1 id="title">Welcome to PoliTweets!</h1>
+<div id="wikiscripts"></div>
+<h1 id="title"><strong>Your Political Feed</strong></h1>
 <div class="row" ng-controller="FeedCtrl">
 	<div class="col-md-3">
-		Left column
 		<div class="form-group">
-			<label><input type="radio" name="politician" ng-model="politician" value="obama"> Barack Obama</label><br>
-			<label><input type="radio" name="politician" ng-model="politician" value="clinton"> Hillary Clinton</label><br>
-			<label><input type="radio" name="politician" ng-model="politician" value="palin"> Sarah Palin</label><br>
-			<label><input type="radio" name="politician" ng-model="politician" value="trump"> Donald Trump</label>
+			<h3 id="democrats">Democrats</h3>
+			<label ng-repeat="candidate in candidates | filter: Party = 'Democrat'" class="rdos">
+				<input type="radio" name="politician" ng-model="$parent.currentCandidate" ng-value="candidate" ng-change="loadWidgets($parent.currentCandidate.WidgetID)">&emsp;{{candidate.Name}}&emsp;</label><br>
+			<h3 id="republicans">Republicans</h3>
+			<label ng-repeat="candidate in candidates | filter: Party = 'Republican'" class="rdos">
+				<input type="radio" name="politician" ng-model="$parent.currentCandidate" ng-value="candidate" ng-change="loadWidgets($parent.currentCandidate.WidgetID)">&emsp;{{candidate.Name}}&emsp;</label>
+
 		</div>
 	</div>
 	<div class="col-md-9">
-		
 	<!-- Here we will be showing the twitter feeds of each of the candidates that are selected. We need to choose a default though, so there isnt a bunch of blank space. -->
-
-		<div ng-if="politician == 'obama'" twitter-timeline="672639914727485442" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
-
-		<div ng-if="politician == 'clinton'" twitter-timeline="673305483248177153" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
-
-		<div ng-if="politician == 'palin'" twitter-timeline="673306541303271424" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
-
-		<div ng-if="politician == 'trump'" twitter-timeline="673290158930706432" auto-resize="true" css-url="/css/main.css" data-tweet-limit="5">Loading the latest tweets...</div>
-
-
-
-
+		<div id="outershell"><h2 id="welcome">Welcome to <span id="politweets">PoliTweets!</span></h2></div>
+		<h3 ng-if="currentCandidate">What are people saying about: <strong><a href="{{currentCandidate.Wikipedia}}">{{currentCandidate.Name}}</a></strong>?</h3>
+		<h3 ng-if="!currentCandidate">What are people saying about: <strong>____________<strong>?</h3>
 		
-
 		
+		<div id="timeline"></div>
 	</div>
 	<div class="col-md-2"></div>
-<div class="row">
+<div class="row"></div>
 </div>

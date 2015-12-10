@@ -6,20 +6,20 @@
 		</div>
 
 		<div class="form-group">
-			<label for "choice1">Choice1</label>
-			<input type="radio" name="choice1" ng-model="choice1" required>
+			<label for "choice1">Choice 1</label>
+			<input type="text" name="choice1" ng-model="choice1" required>
 		</div>
 		<div class="form-group">
-			<label for "choice2">Choice2</label>
-			<input type="radio" name="choice2" ng-model="choice2" required>
+			<label for "choice2">Choice 2</label>
+			<input type="text" name="choice2" ng-model="choice2" required>
 		</div>
 		<div class="form-group">
-			<label for "choice3">Choice3</label>
-			<input type="radio" name="choice3" ng-model="choice3" required>
+			<label for "choice3">Choice 3</label>
+			<input type="text" name="choice3" ng-model="choice3" required>
 		</div>
 		<div class="form-group">
-			<label for "choice4">Choice4</label>
-			<input type="radio" name="choice4" ng-model="choice4" required>
+			<label for "choice4">Choice 4</label>
+			<input type="text" name="choice4" ng-model="choice4" required>
 		</div>
 
 		<button ng-click="addPoll()">Submit</button>
@@ -27,7 +27,14 @@
 </div>
 
 <div class="container">
-	<div ng-repeat="poll in polls">
-		{{poll.pollName}}
+	<div ng-repeat="poll in polls"  class="pollStuff well">
+		<form>
+			<h2>{{poll.name}}</h2>
+			<label ng-repeat="option in poll.options" class="rdos polls">
+				<input type="radio"  name ="{{poll.name}}" ng-click="addValue(option, poll)" required> {{option[0]}}
+
+				Times Chosen: {{option[1]}}
+			</label>
+		</form>
 	</div>
 </div>

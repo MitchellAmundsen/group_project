@@ -1,10 +1,35 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+@import url(https://fonts.googleapis.com/css?family=Lobster);
 
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+	background-color: gray;
+	position: relative;
+	margin: 0;
+	padding-bottom: 6rem;
+	min-height: 100%;
+}
+
+.container {
+	background-color: white;
+	border-radius: 25px;
+}
 
 .navbar {
 	background-color: #4099FF;
 	font-weight: bold;
+	font-size: 24px;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -13,4 +38,89 @@
 
 .navbar-default .navbar-brand {
 	color: white;
+	font-size: 26px;
+	font-family: Lobster
+}
+
+#democrats {
+	color: blue;
+}
+
+#republicans {
+	color: red;
+}
+
+#politweets {
+	color: white;
+	font-family: Lobster
+}
+
+#politweets-black {
+	color: black;
+	font-family: Lobster
+}
+
+#outershell {
+	background-color: #4099FF;
+	-moz-border-radius: 6px; 
+ 	border-radius: 6px; /* standards-compliant: (IE) */ 
+ 	width: 350px;
+}
+
+#welcome {
+	padding: 7px;
+	-moz-border-radius: 6px 6px 0 0;
+ 	border-radius: 6px 6px 0 0; /* standards-compliant: (IE) */
+}
+
+.form-group{
+	background-color: lightgray;
+	padding: 10px;
+	-moz-border-radius: 6px 6px 0 0;
+ 	border-radius: 6px 6px 0 0; /* standards-compliant: (IE) */
+}
+
+.pollStuff {
+	width: 30%;
+	display: inline-block;
+}
+
+#overview {
+	font-size: 24px;
+}
+
+#stories-title {
+	font-size: 22px;
+}
+
+#stories {
+	font-size: 20px;
+}
+
+#footer {
+	position: absolute;
+	padding: 1rem;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #4099FF;
+	color: white;
+	border-radius: 0px;
+	width: 100%;
+}
+
+#thanks {
+	float: right;
+}
+
+.joel {
+	color: red;	
+}
+
+.joel:hover {
+	color: white;
+}
+
+.rdos {
+	width: 100%;
 }

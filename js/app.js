@@ -1,10 +1,32 @@
 'use strict';
 
-angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline', 'firebase'])
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+	  return t;
+  }(document, "script", "twitter-wjs"));
+
+angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 .config(function($stateProvider){
 	$stateProvider
+		.state('home', {
+		url: '/', //"root" directory
+		templateUrl: 'partials/home.html',
+		controller: 'HomeCtrl'
+		})
 		.state('politicalfeed', {
-			url: '/', //"root" directory
+			url: '/feed', //"root" directory
 			templateUrl: 'partials/politicalfeed.html',
 			controller: 'FeedCtrl'
 		})
@@ -20,11 +42,26 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
 		})
 
 })
-.controller('FeedCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
-	//need to figure out how to get widget to always appear upon state change...refreshing page works?
-	//$window.location.reload();
-	console.log($scope.politician);
 
+.controller('FeedCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
+	$http.get('./data/candidates.json')
+       .then(function(res){
+          $scope.candidates = res.data;                
+        }); 
+    $scope.loadWidgets = function(ID){
+    	var currTimeline = angular.element( document.querySelector( '#timeline' ) );
+		currTimeline.empty();
+		
+    	twttr.widgets.createTimeline(
+		  ID,
+		  document.getElementById('timeline'),
+		  {
+		    width: '700',
+		    height: '2000',
+		  }).then(function (el) {
+		    console.log("Timeline updated.")
+		  });
+    }
 }])
 
 .controller('PollCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$firebaseAuth', function($scope, $firebaseObject, $firebaseArray, $firebaseAuth) {
@@ -36,53 +73,101 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
 	
 	$scope.addPoll = function() {
 		$scope.polls.$add({
-			pollName: $scope.pollHeader,
-			choices: [{
-				text: $scope.choice1,
-				value: 0
+			name: $scope.pollHeader,
+			options: [{
+				0: $scope.choice1,
+				1: 0
 			}, {
-				text: $scope.choice2,
-				value: 0
+				0: $scope.choice2,
+				1: 0
 			}, {
-				text: $scope.choice3,
-				value: 0
+				0: $scope.choice3,
+				1: 0
 			}, {
-				text: $scope.choice4,
-				value: 0
-			}]
+				0: $scope.choice4,
+				1: 0
+			}],
 		})
 	}
+
+	$scope.addValue = function(option, poll) {
+		var loc = $scope.polls.indexOf(poll);
+		var a = $scope.polls[loc].options.indexOf(option);
+		console.log($scope.polls[loc].options[a][1]);
+		$scope.polls[loc].options[a][1] += 1;
+		$scope.polls.$save();
+	};
 
 }])
 
 .controller('StatisticsCtrl', ['$scope', '$http', function($scope, $http) {
 	// want to find a way where buttons change values appearring on chart
-
 	var percentGraph = $("#percentages").get(0).getContext("2d");
 	var candidateBar = $("#candidates").get(0).getContext("2d");
+
+	var menu = document.getElementById('chooseChart');
+	var currentSelect;
+
+	var val1 = 100;
+	var val2 = 100;
+	var val3 = 100;
+	var val4 = 100;
+	var val5 = 100;
+
+	var name1 = "Candidate 1"
+	var name2 = "Candidate 2"
+	var name3 = "Candidate 3"
+
 
 	var percentData = [
 		{
 			// import candidate values and name via API
 			// each object is slice of pie/doughnut chart
-			value: 230,
+			value: val1,
 			color: "cornflowerblue",
 			highlight: "lightskyblue",
-			label: "Candidate 1"
+			label: name1
 		},
 		{
-			value: 170,
+			value: val2,
 			color: "red",
 			highlight: "#D64343",
-			label: "Candidate 2"
+			label: name2
 		},
 		{
-			value: 100,
+			value: val3,
 			color: "grey",
 			highlight: "#9A9A9A",
-			label: "Candidate 3"
+			label: name3
+		},
+		{
+			value: val4,
+			color: "#FF4444",
+			highlight: "#FFBDBD",
+			label: "Undecided"
+		},
+		{
+			value: val5,
+			color: "#2A2AFF",
+			highlight: "#5151FF",
+			label: "Other"
 		}
 	];
+
+	var updateGraph = function(val1, val2, val3, val4, val5, name1, name2, name3){
+		percentData[0].value = val1;
+		percentData[1].value = val2;
+		percentData[2].value = val3;
+		percentData[3].value = val4;
+		percentData[4].value = val5;
+		percentData[0].label = name1;
+		percentData[1].label = name2;
+		percentData[2].label = name3;
+
+		//chart.update();
+
+		chart = new Chart(percentGraph).Doughnut(percentData);
+	}
 
 	var candidateData = {
 		labels: ["Bernie Sanders", "Hilary Clinton", "Donald Trump", "Ted Cruz", "Marco Rubio"],
@@ -114,21 +199,79 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
  		$scope.candidates = response.data;
  	});
 
-	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+
+	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function(response){
+
 	// 	$scope.pollData = response.data;
 	// 	console.log($scope.pollData);
 	// });
 
-	$http.jsonp('http://elections.huffingtonpost.com/pollster/api/charts/2016-national-democratic-primary').then(function (response){
-		$scope.pollData = response.data;
-		console.log($scope.pollData);
-	});
+	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/charts/2016-national-gop-primary.json').then(function(response){
+	// 	$scope.gopData = response.data;
+	// 	console.log($scope.gopData);
+	// })
 
+	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/charts/2016-national-democratic-primary.json').then(function(response){
+	// 	$scope.demData = response.data;
+	// 	console.log($scope.demData);
+	// })
+
+	$http.get('data/2016-national-gop-primary.json').then(function(response){
+		$scope.gopData = response.data;
+		console.log($scope.gopData);
+	})
+
+	$http.get('data/2016-national-democratic-primary.json').then(function(response){
+		$scope.demData = response.data;
+		console.log($scope.demData);
+	})
+
+	$http.get('data/2016-ohio-democratic-presidential-primary.json').then(function(response){
+		$scope.demOH = response.data;
+		console.log($scope.demOH);
+	})
+
+	$http.get('data/2016-ohio-republican-presidential-primary.json').then(function(response){
+		$scope.gopOH = response.data;
+		console.log($scope.gopOH);
+	})
 
 	var chart = new Chart(percentGraph).Doughnut(percentData);
 	var chart2 = new Chart(candidateBar).Bar(candidateData);
 
+	$scope.indexChange = function(){
+		if(menu.value == "democratic"){
+			currentSelect = $scope.demData;
+		}
+		if(menu.value == "republican"){
+			currentSelect = $scope.gopData;
+		}
+		if(menu.value == "demOH"){
+			currentSelect = $scope.demOH;
+		}
+		if(menu.value == "gopOH"){
+			currentSelect = $scope.gopOH;
+		}
+
+		val1 = currentSelect.estimates[0].value;
+		val2 = currentSelect.estimates[1].value;
+		val3 = currentSelect.estimates[2].value;
+		val4 = currentSelect.estimates[3].value;
+		val5 = currentSelect.estimates[4].value;
+		name1 = currentSelect.estimates[0].choice;
+		name2 = currentSelect.estimates[1].choice;
+		name3 = currentSelect.estimates[2].choice;
+
+		console.log(val1);
+		updateGraph(val1, val2, val3, val4, val5, name1, name2, name3);
+	}
+
 }])
+
+.controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
+
+}])
+
 .config(function($urlRouterProvider){
     // if the path doesn't match any of the urls you configured
     // otherwise will take care of routing the user to the specified url

@@ -8,12 +8,11 @@
 
 	<link rel="stylesheet" href="css/main.css"> <!-- includes bootstrap -->
 	<link rel="icon" href="img/icon.png"> <!-- adds favicon -->
-
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<!-- load angular -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="lib/chart.js"></script>
-    <script src="lib/twitter-timeline.js"></script>
+
+    <script src="lib/Chart.js"></script>
 
     
 </head>
@@ -28,7 +27,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">PoliTweets</a>
+        <a class="navbar-brand" ui-sref="home" ui-sref-opts="{reload: true}">PoliTweets</a>
     </div>
 
     <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
@@ -46,7 +45,10 @@
 
 
 <footer>
-	<div class="container">
+	<div class="container" id="footer">
+    <span id="copyright"> PoliTweets © 2015 All Rights Reserved </span>
+        <span id="thanks"> Special thanks to <a class="joel" href="http://faculty.washington.edu/joelross/">Joel Ross</a></span>
+        
 	</div>
 </footer>
 
