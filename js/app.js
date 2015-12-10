@@ -114,7 +114,12 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'twitter.timeline',
  		$scope.candidates = response.data;
  	});
 
-	$http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+	// 	$scope.pollData = response.data;
+	// 	console.log($scope.pollData);
+	// });
+
+	$http.jsonp('http://elections.huffingtonpost.com/pollster/api/charts/2016-national-democratic-primary').then(function (response){
 		$scope.pollData = response.data;
 		console.log($scope.pollData);
 	});
