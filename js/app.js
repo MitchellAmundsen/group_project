@@ -94,7 +94,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		var loc = $scope.polls.indexOf(poll);
 		var a = $scope.polls[loc].options.indexOf(option);
 		console.log($scope.polls[loc].options[a][1]);
-		var new $scope.polls[loc].options[a][1] + 1;
+		//var new $scope.polls[loc].options[a][1] + 1;
 		$scope.polls.$save();
 	};
 
@@ -105,27 +105,53 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	var percentGraph = $("#percentages").get(0).getContext("2d");
 	var candidateBar = $("#candidates").get(0).getContext("2d");
 
+	var menu = document.getElementById('chooseChart');
+	var currentSelect;
+
+	var val1 = 100;
+	var val2 = 100;
+	var val3 = 100;
+	var val4 = 100;
+	var val5 = 100;
+
+	var name1 = "Candidate 1"
+	var name2 = "Candidate 2"
+	var name3 = "Candidate 3"
+
 	var percentData = [
 		{
 			// import candidate values and name via API
 			// each object is slice of pie/doughnut chart
-			value: 230,
+			value: val1,
 			color: "cornflowerblue",
 			highlight: "lightskyblue",
-			label: "Candidate 1"
+			label: name1
 		},
 		{
-			value: 170,
+			value: val2,
 			color: "red",
 			highlight: "#D64343",
-			label: "Candidate 2"
+			label: name2
 		},
 		{
-			value: 100,
+			value: val3,
 			color: "grey",
 			highlight: "#9A9A9A",
-			label: "Candidate 3"
+			label: name3
+		},
+		{
+			value: val4,
+			color: "#FF4444",
+			highlight: "#FFBDBD",
+			label: "Undecided"
+		},
+		{
+			value: val5,
+			color: "#2A2AFF",
+			highlight: "#5151FF",
+			label: "Other"
 		}
+
 	];
 
 	var candidateData = {
@@ -158,14 +184,68 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
  		$scope.candidates = response.data;
  	});
 
-	$http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function (response){
+	$http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function(response){
 		$scope.pollData = response.data;
 		console.log($scope.pollData);
 	});
 
+	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/charts/2016-national-gop-primary.json').then(function(response){
+	// 	$scope.gopData = response.data;
+	// 	console.log($scope.gopData);
+	// })
+
+	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/charts/2016-national-democratic-primary.json').then(function(response){
+	// 	$scope.demData = response.data;
+	// 	console.log($scope.demData);
+	// })
+
+	$http.get('data/2016-national-gop-primary.json').then(function(response){
+		$scope.gopData = response.data;
+		console.log($scope.gopData);
+	})
+
+	$http.get('data/2016-national-democratic-primary.json').then(function(response){
+		$scope.demData = response.data;
+		console.log($scope.demData);
+	})
+
+	$http.get('data/2016-ohio-democratic-presidential-primary.json').then(function(response){
+		$scope.demOH = response.data;
+		console.log($scope.demOH);
+	})
+
+	$http.get('data/2016-ohio-republican-presidential-primary.json').then(function(response){
+		$scope.gopOH = response.data;
+		console.log($scope.gopOH);
+	})
 
 	var chart = new Chart(percentGraph).Doughnut(percentData);
 	var chart2 = new Chart(candidateBar).Bar(candidateData);
+
+	$scope.indexChange = function(){
+		if(menu.value == "democratic"){
+			currentSelect = $scope.demData;
+		}
+		if(menu.value == "republican"){
+			currentSelect = $scope.gopData;
+		}
+		if(menu.value == "demOH"){
+			currentSelect = $scope.demOH;
+		}
+		if(menu.value == "gopOH"){
+			currentSelect = $scope.gopOH;
+		}
+
+		var1 = currentSelect.estimates[0].value;
+		var2 = currentSelect.estimates[1].value;
+		var3 = currentSelect.estimates[2].value;
+		var4 = currentSelect.estimates[3].value;
+		var5 = currentSelect.estimates[4].value;
+
+		chart = new Chart(percentGraph).Doughnut(percentData);
+
+		console.log("test");
+	}
 
 }])
 

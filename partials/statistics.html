@@ -1,11 +1,15 @@
 <!-- not sure if we need to have varying canvas sizes or if that is implementable -->
-<select>
-	<option value="national">National Poll</option>
-	<option value="democratic">Democratic Polls</option>
-	<option value="republican">Republican Polls</option>
-</select>
+<div class="container">
+	<select id="chooseChart" ngChange="indexChange()">
+		<option value="national">National Poll</option>
+		<option value="democratic">Democratic Polls</option>
+		<option value="republican">Republican Polls</option>
+		<option value="demOH">Ohio Democratic Polls</option>
+		<option value="gopOH">Ohio Republican Polls</option>
+	</select>
 
-<canvas id="percentages" width="256" height"256"></canvas>
+	<canvas id="percentages" width="256" height"256"></canvas>
 
-<!-- for showing a large number of candidates (number of votes?) -->
-<canvas id="candidates" width="600" height="400"></canvas>
+	<!-- for showing a large number of candidates (number of votes?) -->
+	<canvas id="candidates" width="600" height="400"></canvas>
+</div>
