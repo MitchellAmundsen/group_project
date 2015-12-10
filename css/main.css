@@ -2,8 +2,23 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 @import url(https://fonts.googleapis.com/css?family=Lobster);
 
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
 	background-color: gray;
+	position: relative;
+	margin: 0;
+	padding-bottom: 6rem;
+	min-height: 100%;
 }
 
 .container {
@@ -71,8 +86,11 @@ body {
 }
 
 #footer {
-	position: fixed;
+	position: absolute;
+	padding: 1rem;
+	right: 0;
 	bottom: 0;
+	left: 0;
 	background-color: #4099FF;
 	color: white;
 	border-radius: 0px;
