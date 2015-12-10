@@ -2,6 +2,13 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 @import url(https://fonts.googleapis.com/css?family=Lobster);
 
+body {
+	background-color: gray;
+}
+
+.container {
+	background-color: white;
+}
 
 .navbar {
 	background-color: #4099FF;
