@@ -44,7 +44,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 })
 
 .controller('FeedCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
-	$http.get('../data/candidates.json')
+	$http.get('../../data/candidates.json')
        .then(function(res){
           $scope.candidates = res.data;                
         }); 
