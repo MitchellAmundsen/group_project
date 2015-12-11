@@ -98,9 +98,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	$scope.addValue = function(option, poll) {
 		var loc = $scope.polls.indexOf(poll);
 		var a = $scope.polls[loc].options.indexOf(option);
-		console.log($scope.polls[loc].options[a][1]);
 		$scope.polls[loc].options[a][1] += 1;
-		$scope.polls.$save();
+		console.log($scope.polls[loc].options[a][1]);
+		$scope.polls.$save($scope.polls[loc]).catch(function(error) {
+			console.log(error);
+		});
 	};
 
 }])
