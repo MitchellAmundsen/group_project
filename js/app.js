@@ -142,14 +142,14 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	var currentSelect;
 
 	var val1 = 100;
-	var val2 = 100;
-	var val3 = 100;
-	var val4 = 100;
-	var val5 = 100;
+	var val2 = 0;
+	var val3 = 0;
+	var val4 = 0;
+	var val5 = 0;
 
-	var name1 = "Candidate 1"
-	var name2 = "Candidate 2"
-	var name3 = "Candidate 3"
+	var name1 = ""
+	var name2 = ""
+	var name3 = ""
 
 
 	var percentData = [
@@ -188,18 +188,16 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	];
 
 	var updateGraph = function(val1, val2, val3, val4, val5, name1, name2, name3){
-		percentData[0].value = val1;
-		percentData[1].value = val2;
-		percentData[2].value = val3;
-		percentData[3].value = val4;
-		percentData[4].value = val5;
-		percentData[0].label = name1;
-		percentData[1].label = name2;
-		percentData[2].label = name3;
+		chart.segments[0].value = val1;
+		chart.segments[1].value = val2;
+		chart.segments[2].value = val3;
+		chart.segments[3].value = val4;
+		chart.segments[4].value = val5;
+		chart.segments[0].label = name1;
+		chart.segments[1].label = name2;
+		chart.segments[2].label = name3;
 
-		//chart.update();
-
-		chart = new Chart(percentGraph).Doughnut(percentData);
+		chart.update();
 	}
 
 	var candidateData = {
