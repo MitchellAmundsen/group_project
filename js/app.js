@@ -133,46 +133,57 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 
 }])
 
-.controller('StatisticsCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('StatisticsCtrl', ['$scope', '$http', '$firebaseObject', '$firebaseArray', '$firebaseAuth', function($scope, $http, $firebaseObject, $firebaseArray, $firebaseAuth) {
 	// want to find a way where buttons change values appearring on chart
 	var percentGraph = $("#percentages").get(0).getContext("2d");
 	var percentGraph2 = $("#percentages2").get(0).getContext("2d");
 
-	var menu = document.getElementById('demChart');
-	var menu2 = document.getElementById('gopChart');
+	$scope.menu = document.getElementById('demChart');
+	$scope.menu2 = document.getElementById('gopChart');
 	var currentSelect;
 	var currentSelect2;
 
+	//initizizes values for blank graphs
 	var val1 = 100;
 	var val2 = 0;
 	var val3 = 0;
 	var val4 = 0;
 	var val5 = 0;
 
-	var name1 = ""
-	var name2 = ""
-	var name3 = ""
+	var name1 = "";
+	var name2 = "";
+	var name3 = "";
 
+	$scope.demSelect = "Democratic Polls";
+	$scope.gopSelect = "Republican Polls";
 
+	//initializes firebase polls
+	var ref = new Firebase("https://politweets.firebaseio.com/");
+	var pollRef = ref.child("polls");
+
+	var pollSubmitted = [];
+	$scope.polls = $firebaseArray(pollRef);
+
+	//data for initializing graphs
 	var percentData = [
 		{
 			// import candidate values and name via API
 			// each object is slice of pie/doughnut chart
 			value: val1,
-			color: "cornflowerblue",
-			highlight: "lightskyblue",
+			color: "#2A2AFF",
+			highlight: "#5151FF",
 			label: name1
 		},
 		{
 			value: val2,
-			color: "grey",
-			highlight: "#9A9A9A",
+			color: "cornflowerblue",
+			highlight: "lightskyblue",
 			label: name2
 		},
 		{
 			value: val3,
-			color: "#2A2AFF",
-			highlight: "#5151FF",
+			color: "#0000B7",
+			highlight: "#2A2AC2",
 			label: name3
 		},
 		{
@@ -183,8 +194,8 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		},
 		{
 			value: val5,
-			color: "#0000B7",
-			highlight: "#2A2AC2",
+			color: "grey",
+			highlight: "#9A9A9A",
 			label: "Other"
 		}
 	];
@@ -234,38 +245,41 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	var chart1 = new Chart(percentGraph).Doughnut(percentData);
 	percentData[0].color = "red";
 	percentData[0].highlight = "#D64343";
-	percentData[2].color = "#FF4444";
-	percentData[2].highlight = "#FFBDBD";
-	percentData[4].color = "#920000";
-	percentData[4].highlight = "#A52E2E";
+	percentData[1].color = "#FF4444";
+	percentData[1].highlight = "#FFBDBD";
+	percentData[2].color = "#920000";
+	percentData[2].highlight = "#A52E2E";
 	var chart2 = new Chart(percentGraph2).Doughnut(percentData);
 
 
-
 	$scope.demIndexChange = function(){
-		if(menu.value == "democratic"){
+		if($scope.menu.value == "National Democratic"){
 			currentSelect = $scope.demData;
 		}
-		if(menu.value == "demOH"){
+		if($scope.menu.value == "Ohio Democratic"){
 			currentSelect = $scope.demOH;
 		}
-		if(menu.value == "demCA"){
+		if($scope.menu.value == "California Democratic"){
 			currentSelect = $scope.demCA;
 		}
+		$scope.demSelect = $scope.menu.value + " Poll";
+		$scope.menu.value = "";
 		
 		valueChanges(currentSelect, chart1);
 	}
 
 	$scope.gopIndexChange = function(){
-		if(menu2.value == "republican"){
+		if($scope.menu2.value == "National Republican"){
 			currentSelect = $scope.gopData;
 		}
-		if(menu2.value == "gopOH"){
+		if($scope.menu2.value == "Ohio Republican"){
 			currentSelect = $scope.gopOH;
 		}
-		if(menu2.value == "gopFL"){
+		if($scope.menu2.value == "Florida Republican"){
 			currentSelect = $scope.gopFL;
 		}
+		$scope.gopSelect = $scope.menu2.value + " Poll";
+		$scope.menu2.value = "";
 
 		valueChanges(currentSelect, chart2);
 	}
