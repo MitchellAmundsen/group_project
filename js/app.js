@@ -40,6 +40,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 			templateUrl: 'partials/statistics.html',
 			controller: 'StatisticsCtrl'
 		})
+		.state('memes', {
+		url: '/memes',
+		templateUrl: 'partials/memes.html',
+		controller: 'MemeCtrl'
+		})
 		.state('about', {
 		url: '/about',
 		templateUrl: 'partials/about.html',
@@ -326,6 +331,10 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 }])
 
 .controller('AboutCtrl', ['$scope', '$http', function($scope, $http) {
+
+}])
+
+.controller('MemeCtrl', ['$scope', '$http', function($scope, $http) {
 
 }])
 
