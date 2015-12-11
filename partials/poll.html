@@ -1,5 +1,6 @@
 <div class="container">
 	<form class="well">
+	<!--
 		<div class="form-group">
 			<label for="pollHeader">Poll Header:</label>
 			<input name="pollHeader" ng-model="pollHeader" class="form-control" required>
@@ -21,19 +22,34 @@
 			<label for "choice4">Choice 4</label>
 			<input type="text" name="choice4" ng-model="choice4" required>
 		</div>
+-->
+		<h3>Create a Poll:</h3>
+		<div class="form-group">
+			<label for="PollHeader"></label>
+			<input name="PollHeader"type="text" ng-model="pollForm.name" placeholder="Poll's name">
+		</div>
 
-		<button ng-click="addPoll()">Submit</button>
+		<h4>Answers:</h4>
+		<div ng-repeat="option in pollForm.options track by $index">
+            Option {{ $index+1 }} 
+            <input type="text" placeholder="option" ng-model="pollForm.options[$index][0]">
+            <button class="btn" ng-click="removeOption($index)">Remove</button>
+        </div>
+
+        <button class="btn" ng-click="addPollOption()">+ Add answer</button>
+
+		<button class="btn" ng-click="pollCreate()">Submit</button>
 	</form>
 </div>
 
-<div class="container">
+<div class="container pollList">
 	<div ng-repeat="poll in polls"  class="pollStuff well">
 		<form>
 			<h2>{{poll.name}}</h2>
 			<label ng-repeat="option in poll.options" class="rdos polls">
 				<input type="radio"  name ="{{poll.name}}" ng-click="addValue(option, poll)" required> {{option[0]}}
 
-				Times Chosen: {{option[1]}}
+				Chosen: {{option[1]}}
 			</label>
 		</form>
 	</div>

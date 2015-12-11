@@ -75,7 +75,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 
 	$scope.polls = $firebaseArray(pollRef);
 
-	
+	/*
 	$scope.addPoll = function() {
 		$scope.polls.$add({
 			name: $scope.pollHeader,
@@ -95,6 +95,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		})
 	}
 
+*/
 	$scope.addValue = function(option, poll) {
 		var loc = $scope.polls.indexOf(poll);
 		var a = $scope.polls[loc].options.indexOf(option);
@@ -104,6 +105,40 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 			console.log(error);
 		});
 	};
+	$scope.resetForm = function(){
+        $scope.pollForm = {};
+        $scope.pollForm.options = [];
+    };
+    // call one reset on load for object declaration
+    $scope.resetForm();
+    // Add a poll option to the creation form
+    $scope.addPollOption = function(){
+        $scope.pollForm.options.push(['', '0']);
+    };
+    // remove pull option from the form
+    $scope.removeOption = function(index){
+        $scope.pollForm.options.splice(index,1);
+    };
+
+    // Create a new poll
+    $scope.pollCreate = function(){
+        // add to poll to the Firebase object - this will update it at the server
+        // check for empty options
+        for (var i = 0; i < $scope.pollForm.options.length; i++){
+            // make sure no empty options
+            if (angular.isUndefined($scope.pollForm.options[i][0]) || $scope.pollForm.options[i][0]=='') {
+            	$scope.pollForm.options.splice(i,1)
+            }
+            $scope.pollForm.options[i][1] = 0;
+        }
+        if ($scope.pollForm.name && ($scope.pollForm.options.length>0))
+        {
+            // add the new form to the firebase object. it will be updated automagically in firebase
+            $scope.polls.$add($scope.pollForm);
+            // reset the poll creation form
+            $scope.resetForm();
+        }
+    };
 
 }])
 
