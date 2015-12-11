@@ -138,3 +138,7 @@ body {
 .rdos {
 	width: 100%;
 }
+
+.img-responsive {
+	display: inline;
+}
