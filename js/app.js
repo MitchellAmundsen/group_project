@@ -73,37 +73,28 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	var ref = new Firebase("https://politweets.firebaseio.com/");
 	var pollRef = ref.child("polls");
 
+	var pollSubmitted = [];
 	$scope.polls = $firebaseArray(pollRef);
+	$scope.polls.$loaded().then(function(polls) {
+		
+		for (var i = 0; i < $scope.polls.length; i++) {
+			pollSubmitted.push(false);	
+		}
 
-	/*
-	$scope.addPoll = function() {
-		$scope.polls.$add({
-			name: $scope.pollHeader,
-			options: [{
-				0: $scope.choice1,
-				1: 0
-			}, {
-				0: $scope.choice2,
-				1: 0
-			}, {
-				0: $scope.choice3,
-				1: 0
-			}, {
-				0: $scope.choice4,
-				1: 0
-			}],
-		})
-	}
+	})
 
-*/
+
 	$scope.addValue = function(option, poll) {
 		var loc = $scope.polls.indexOf(poll);
 		var a = $scope.polls[loc].options.indexOf(option);
-		$scope.polls[loc].options[a][1] += 1;
-		console.log($scope.polls[loc].options[a][1]);
-		$scope.polls.$save($scope.polls[loc]).catch(function(error) {
-			console.log(error);
-		});
+		if (!pollSubmitted[loc]) {
+			$scope.polls[loc].options[a][1] += 1;
+			console.log($scope.polls[loc].options[a][1]);
+			$scope.polls.$save($scope.polls[loc]).catch(function(error) {
+				console.log(error);
+			});
+			pollSubmitted[loc] = true;
+		}
 	};
 	$scope.resetForm = function(){
         $scope.pollForm = {};
