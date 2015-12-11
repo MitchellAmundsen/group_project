@@ -40,6 +40,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 			templateUrl: 'partials/statistics.html',
 			controller: 'StatisticsCtrl'
 		})
+		.state('about', {
+		url: '/about',
+		templateUrl: 'partials/about.html',
+		controller: 'AboutCtrl'
+		})
 
 })
 
@@ -271,6 +276,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 .controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
 
 }])
+
+.controller('AboutCtrl', ['$scope', '$http', function($scope, $http) {
+
+}])
+
 
 .config(function($urlRouterProvider){
     // if the path doesn't match any of the urls you configured

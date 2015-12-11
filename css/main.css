@@ -97,6 +97,10 @@ body {
 	font-size: 20px;
 }
 
+#about {
+	color: red;
+}
+
 #footer {
 	position: absolute;
 	padding: 1rem;
