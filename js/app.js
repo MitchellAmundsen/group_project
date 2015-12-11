@@ -136,10 +136,12 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 .controller('StatisticsCtrl', ['$scope', '$http', function($scope, $http) {
 	// want to find a way where buttons change values appearring on chart
 	var percentGraph = $("#percentages").get(0).getContext("2d");
-	var candidateBar = $("#candidates").get(0).getContext("2d");
+	var percentGraph2 = $("#percentages2").get(0).getContext("2d");
 
-	var menu = document.getElementById('chooseChart');
+	var menu = document.getElementById('demChart');
+	var menu2 = document.getElementById('gopChart');
 	var currentSelect;
+	var currentSelect2;
 
 	var val1 = 100;
 	var val2 = 0;
@@ -163,42 +165,29 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		},
 		{
 			value: val2,
-			color: "red",
-			highlight: "#D64343",
+			color: "grey",
+			highlight: "#9A9A9A",
 			label: name2
 		},
 		{
 			value: val3,
-			color: "grey",
-			highlight: "#9A9A9A",
+			color: "#2A2AFF",
+			highlight: "#5151FF",
 			label: name3
 		},
 		{
 			value: val4,
-			color: "#FF4444",
-			highlight: "#FFBDBD",
+			color: "#272727",
+			highlight: "#3F3F3F",
 			label: "Undecided"
 		},
 		{
 			value: val5,
-			color: "#2A2AFF",
-			highlight: "#5151FF",
+			color: "#0000B7",
+			highlight: "#2A2AC2",
 			label: "Other"
 		}
 	];
-
-	var updateGraph = function(val1, val2, val3, val4, val5, name1, name2, name3){
-		chart.segments[0].value = val1;
-		chart.segments[1].value = val2;
-		chart.segments[2].value = val3;
-		chart.segments[3].value = val4;
-		chart.segments[4].value = val5;
-		chart.segments[0].label = name1;
-		chart.segments[1].label = name2;
-		chart.segments[2].label = name3;
-
-		chart.update();
-	}
 
 	var candidateData = {
 		labels: ["Bernie Sanders", "Hilary Clinton", "Donald Trump", "Ted Cruz", "Marco Rubio"],
@@ -225,12 +214,6 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		]
 	};
 
-	// grab CandidateData
-	$http.get('data/candidates.json').then(function(response) {
- 		$scope.candidates = response.data;
- 	});
-
-
 	// $http.jsonp('http://elections.huffingtonpost.com/pollster/api/polls.json').then(function(response){
 
 	// 	$scope.pollData = response.data;
@@ -247,43 +230,47 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	// 	console.log($scope.demData);
 	// })
 
-	$http.get('data/2016-national-gop-primary.json').then(function(response){
-		$scope.gopData = response.data;
-		console.log($scope.gopData);
-	})
+	//initializes first chart then changes color values and initializes GOP chart
+	var chart1 = new Chart(percentGraph).Doughnut(percentData);
+	percentData[0].color = "red";
+	percentData[0].highlight = "#D64343";
+	percentData[2].color = "#FF4444";
+	percentData[2].highlight = "#FFBDBD";
+	percentData[4].color = "#920000";
+	percentData[4].highlight = "#A52E2E";
+	var chart2 = new Chart(percentGraph2).Doughnut(percentData);
 
-	$http.get('data/2016-national-democratic-primary.json').then(function(response){
-		$scope.demData = response.data;
-		console.log($scope.demData);
-	})
 
-	$http.get('data/2016-ohio-democratic-presidential-primary.json').then(function(response){
-		$scope.demOH = response.data;
-		console.log($scope.demOH);
-	})
 
-	$http.get('data/2016-ohio-republican-presidential-primary.json').then(function(response){
-		$scope.gopOH = response.data;
-		console.log($scope.gopOH);
-	})
-
-	var chart = new Chart(percentGraph).Doughnut(percentData);
-	var chart2 = new Chart(candidateBar).Bar(candidateData);
-
-	$scope.indexChange = function(){
+	$scope.demIndexChange = function(){
 		if(menu.value == "democratic"){
 			currentSelect = $scope.demData;
-		}
-		if(menu.value == "republican"){
-			currentSelect = $scope.gopData;
 		}
 		if(menu.value == "demOH"){
 			currentSelect = $scope.demOH;
 		}
-		if(menu.value == "gopOH"){
+		if(menu.value == "demCA"){
+			currentSelect = $scope.demCA;
+		}
+		
+		valueChanges(currentSelect, chart1);
+	}
+
+	$scope.gopIndexChange = function(){
+		if(menu2.value == "republican"){
+			currentSelect = $scope.gopData;
+		}
+		if(menu2.value == "gopOH"){
 			currentSelect = $scope.gopOH;
 		}
+		if(menu2.value == "gopFL"){
+			currentSelect = $scope.gopFL;
+		}
 
+		valueChanges(currentSelect, chart2);
+	}
+
+	var valueChanges = function(currentSelect, chartType){
 		val1 = currentSelect.estimates[0].value;
 		val2 = currentSelect.estimates[1].value;
 		val3 = currentSelect.estimates[2].value;
@@ -293,9 +280,44 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		name2 = currentSelect.estimates[1].choice;
 		name3 = currentSelect.estimates[2].choice;
 
-		console.log(val1);
-		updateGraph(val1, val2, val3, val4, val5, name1, name2, name3);
+		console.log(name1);
+		updateGraph(val1, val2, val3, val4, val5, name1, name2, name3, chartType);
 	}
+
+	var updateGraph = function(val1, val2, val3, val4, val5, name1, name2, name3, chartName){
+		chartName.segments[0].value = val1;
+		chartName.segments[1].value = val2;
+		chartName.segments[2].value = val3;
+		chartName.segments[3].value = val4;
+		chartName.segments[4].value = val5;
+		chartName.segments[0].label = name1;
+		chartName.segments[1].label = name2;
+		chartName.segments[2].label = name3;
+
+		chartName.update();
+	}
+
+
+	$http.get('data/2016-national-gop-primary.json').then(function(response){
+		$scope.gopData = response.data;
+	})
+	$http.get('data/2016-national-democratic-primary.json').then(function(response){
+		$scope.demData = response.data;
+	})
+	$http.get('data/2016-ohio-democratic-presidential-primary.json').then(function(response){
+		$scope.demOH = response.data;
+	})
+	$http.get('data/2016-ohio-republican-presidential-primary.json').then(function(response){
+		$scope.gopOH = response.data;
+	})
+	$http.get('data/2016-florida-presidential-republican-primary.json').then(function(response){
+		$scope.gopFL = response.data;
+		console.log($scope.gopFL);
+	})
+	$http.get('data/2016-california-democratic-presidential-primary.json').then(function(response){
+		$scope.demCA = response.data;
+		console.log($scope.demCA);
+	})
 
 }])
 
