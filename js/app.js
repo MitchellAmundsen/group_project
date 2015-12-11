@@ -26,7 +26,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		controller: 'HomeCtrl'
 		})
 		.state('politicalfeed', {
-			url: '/feed', //"root" directory
+			url: '/feed',
 			templateUrl: 'partials/politicalfeed.html',
 			controller: 'FeedCtrl'
 		})
