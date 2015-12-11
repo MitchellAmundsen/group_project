@@ -81,8 +81,9 @@ body {
 }
 
 .pollStuff {
-	width: 30%;
+	width: 250px;
 	display: inline-block;
+	margin-right: 2%;
 }
 
 #overview {
