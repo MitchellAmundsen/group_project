@@ -27,7 +27,7 @@
 			<label ng-repeat="option in poll.options" class="rdos polls">
 				<input type="radio"  name ="{{poll.name}}" ng-click="addValue(option, poll)" required> {{option[0]}}
 
-				Chosen: {{option[1]}}
+				---- Chosen: <span id="option">{{option[1]}}</span>
 			</label>
 		</form>
 	</div>

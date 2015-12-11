@@ -142,3 +142,9 @@ body {
 .img-responsive {
 	display: inline;
 }
+
+#option {
+	color: red;
+	font-weight: bold;
+	font-size: 16px;
+}
