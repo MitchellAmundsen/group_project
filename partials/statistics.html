@@ -1,36 +1,41 @@
 <!-- not sure if we need to have varying canvas sizes or if that is implementable -->
 <div class="container">
+	<div class="container">
+		<h2 class="container"> {{demSelect}}</h2>
+		<select id="demChart" ng-model="select" ng-Change="demIndexChange()">
+			<option value="">select</option>
+			<option value="National Democratic">National Democratic Poll</option>
+			<option value="Ohio Democratic">Ohio Democratic Poll</option>
+			<option value="California Democratic">California Democratic Poll</option>
+			<option value="Pennsylvania Democratic">Pennsylvania Poll</option>
+		</select>
+		<br></br>
+		<canvas id="percentages" width="350" height="350"></canvas>
+	</div>
 
-	<h2 class="container"> {{demSelect}}</h2>
-	<select id="demChart" ng-model="select" ng-Change="demIndexChange()">
-		<option value="">select</option>
-		<option value="National Democratic">National Democratic Poll</option>
-		<option value="Ohio Democratic">Ohio Democratic Poll</option>
-		<option value="California Democratic">California Democratic Poll</option>
-		<option value="Pennsylvania Democratic">Pennsylvania Poll</option>
-	</select>
-	<canvas id="percentages" width="350" height="350"></canvas>
-	
+
+	<div class="container">
+		<h2 class="container"> {{gopSelect}}</h2>
+		<select id="gopChart" ng-model="select" ng-Change="gopIndexChange()">
+			<option value="">select</option>
+			<option value="National Republican">National Republican Poll</option>
+			<option value="Ohio Republican">Ohio Republican Poll</option>
+			<option value="Florida Republican">Florida Republican Poll</option>
+			<option value="Iowa Republican">Iowa Republican Poll</option>
+		</select>
+		<br></br>
+		<canvas id="percentages2" width="350" height="350"></canvas>
+	</div>
+
 	<br></br>
-
-	<h2 class="container"> {{gopSelect}}</h2>
-	<select id="gopChart" ng-model="select" ng-Change="gopIndexChange()">
-		<option value="">select</option>
-		<option value="National Republican">National Republican Poll</option>
-		<option value="Ohio Republican">Ohio Republican Poll</option>
-		<option value="Florida Republican">Florida Republican Poll</option>
-		<option value="Iowa Republican">Iowa Republican Poll</option>
-	</select>
-	<canvas id="percentages2" width="350" height="350"></canvas>
-
-	<br></br>
-
-	<!-- poll data -->
-	<h2 class ="container">{{fireSelect}}</h2>
-	<canvas id="polls" width="600" height="400"></canvas>
-	<select id="pollBar" ng-model ="select" ng-Change="pollIndexChange()">
-		<option  ng-repeat="poll in polls" value="{{poll.name}}">{{poll.name}}</option>
-	</select>
-	<br></br>
-	<p class="container"> Data from Huffpost Pollster API</p>
+	<div class="container">
+		<h2 class ="container">{{fireSelect}}</h2>
+		<canvas id="polls" width="600" height="400"></canvas>
+		<br></br>
+		<select id="pollBar" ng-model ="select" ng-Change="pollIndexChange()">
+			<option  ng-repeat="poll in polls" value="{{poll.name}}">{{poll.name}}</option>
+		</select>
+		<br></br>
+		<p class="container"> Data from Huffpost Pollster API</p>
+	</div>
 </div>
