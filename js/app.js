@@ -1,5 +1,5 @@
 'use strict';
-
+//initialization of twitter script
 window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
@@ -59,9 +59,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
           $scope.candidates = res.data;                
         }); 
     $scope.loadWidgets = function(ID){
+    	//uses jqlite or jquery to select the current timeline
     	var currTimeline = angular.element( document.querySelector( '#timeline' ) );
+		//empties the timeline before making a new one
 		currTimeline.empty();
-		
+		//creates a new timeline using Twitter API
     	twttr.widgets.createTimeline(
 		  ID,
 		  document.getElementById('timeline'),
@@ -69,7 +71,7 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		    width: '700',
 		    height: '2000',
 		  }).then(function (el) {
-		    console.log("Timeline updated.")
+		    //console.log("Timeline updated.")
 		  });
     }
 }])
