@@ -142,9 +142,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	// want to find a way where buttons change values appearring on chart
 	var percentGraph = $("#percentages").get(0).getContext("2d");
 	var percentGraph2 = $("#percentages2").get(0).getContext("2d");
+	var pollGraph = $("#polls").get(0).getContext("2d");
 
 	$scope.menu = document.getElementById('demChart');
 	$scope.menu2 = document.getElementById('gopChart');
+	$scope.pollMenu = document.getElementById('pollBar');
 	var currentSelect;
 	var currentSelect2;
 
@@ -159,15 +161,16 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	var name2 = "";
 	var name3 = "";
 
+	// initial title for doughnut 
 	$scope.demSelect = "Democratic Polls";
 	$scope.gopSelect = "Republican Polls";
+	$scope.fireSelect = "PoliTweets' Polls";
 
 	//initializes firebase polls
 	var ref = new Firebase("https://politweets.firebaseio.com/");
 	var pollRef = ref.child("polls");
-
-	var pollSubmitted = [];
 	$scope.polls = $firebaseArray(pollRef);
+	console.log($scope.polls);
 
 	//data for initializing graphs
 	var percentData = [
@@ -204,28 +207,19 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 			label: "Other"
 		}
 	];
-
-	var candidateData = {
-		labels: ["Bernie Sanders", "Hilary Clinton", "Donald Trump", "Ted Cruz", "Marco Rubio"],
+	//initial bar data (empty)
+	var pollData = {
+		labels: [""],
 		datasets: [
 			{
 				label: "Poll Numbers",
 				// all colors should be changed to more appropriate political colors
-				fillColor: "#E72020",
-				strokeColor: "#AD0000",
-				highlightFill: "#EE6262",
-				highlightStroke: "#EA4141",
+				fillColor: "#2B1B6F",
+				strokeColor: "#FFA800",
+				highlightFill: "#2B1B6F",
+				highlightStroke: "#FFA800",
 				// values dependent on api
-				data: [93, 93, 37, 57, 74]
-			},
-			{
-				// Need another value not percentage can add additional
-				label: "Corporate Funding",
-				fillColor: "#416EFF",
-				strokeColor: "#003CFF",
-				highlightFill: "#66C7FF",
-				highlightStroke: "#00A2FF",
-				data: [71, 94, 10, 18, 39]
+				data: [0]
 			}
 		]
 	};
@@ -256,7 +250,9 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	percentData[2].highlight = "#A52E2E";
 	var chart2 = new Chart(percentGraph2).Doughnut(percentData);
 
+	var pollChart = new Chart(pollGraph).Bar(pollData);
 
+	// checks which democratic data is selected
 	$scope.demIndexChange = function(){
 		if($scope.menu.value == "National Democratic"){
 			currentSelect = $scope.demData;
@@ -267,12 +263,16 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		if($scope.menu.value == "California Democratic"){
 			currentSelect = $scope.demCA;
 		}
+		if($scope.menu.value == "Pennsylvania Democratic"){
+			currentSelect = $scope.demPA;
+		}
 		$scope.demSelect = $scope.menu.value + " Poll";
 		$scope.menu.value = "";
 		
 		valueChanges(currentSelect, chart1);
 	}
 
+	//checks to see which GOP data is selected
 	$scope.gopIndexChange = function(){
 		if($scope.menu2.value == "National Republican"){
 			currentSelect = $scope.gopData;
@@ -283,12 +283,35 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		if($scope.menu2.value == "Florida Republican"){
 			currentSelect = $scope.gopFL;
 		}
+		if($scope.menu2.value == "Iowa Republican"){
+			currentSelect = $scope.gopIA;
+		}
 		$scope.gopSelect = $scope.menu2.value + " Poll";
 		$scope.menu2.value = "";
 
 		valueChanges(currentSelect, chart2);
 	}
 
+	//finds chosen poll and sends values for updating
+	$scope.pollIndexChange = function(){
+		var pollChoiceIndex = $scope.pollMenu.selectedIndex;
+		var pollQ = $scope.polls[pollChoiceIndex];
+		$scope.fireSelect = pollQ.name;
+		var pollOptions = pollQ.options;
+
+		var valArr = [];
+		var nameArr = [];
+
+		for(var i=0; i<pollOptions.length; i++){
+			valArr[i] = pollOptions[i][1];
+			nameArr[i] = pollOptions[i][0];
+		}
+		console.log(valArr);
+		console.log(nameArr);
+		updateBar(valArr, nameArr);
+	}
+
+	//finds values of currenly selected json 
 	var valueChanges = function(currentSelect, chartType){
 		val1 = currentSelect.estimates[0].value;
 		val2 = currentSelect.estimates[1].value;
@@ -299,10 +322,11 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		name2 = currentSelect.estimates[1].choice;
 		name3 = currentSelect.estimates[2].choice;
 
-		console.log(name1);
 		updateGraph(val1, val2, val3, val4, val5, name1, name2, name3, chartType);
 	}
 
+	// updates doughnut chart with new values
+	// this is easier due to a static number of slices
 	var updateGraph = function(val1, val2, val3, val4, val5, name1, name2, name3, chartName){
 		chartName.segments[0].value = val1;
 		chartName.segments[1].value = val2;
@@ -316,7 +340,37 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 		chartName.update();
 	}
 
+	// changes bar graph if new selection is chosen
+	var updateBar = function(valArr, nameArr){
+		var pollLength = pollData.labels.length;
 
+		// removes graph's data completely (chart.js has limited method options for data manipulation)
+		for(var i=0; i<pollLength; i++){
+			pollChart.removeData();
+		}
+		// adds new data back into graph
+		for(var i=0; i<valArr.length; i++){
+			pollChart.addData([valArr[i]], nameArr[i]);
+		}
+
+		// while(pollLength != valArr.length){
+		// 	if(pollLength <= valArr.length){
+		// 		pollChart.addData([valArr[pollLength-1]], nameArr[pollLength-1]);
+		// 		pollLength++;
+		// 	}else{
+		// 		pollChart.labels[pollLength-1] = undefined;
+		// 		pollChart.datasets[0].bars[pollLength-1].value = undefined;
+		// 		pollLength--;
+		// 	}
+		// }
+		// console.log(pollLength);
+		// console.log(valArr.length);
+
+		pollChart.update();
+	}
+
+
+	// brings in local json files for graphs
 	$http.get('data/2016-national-gop-primary.json').then(function(response){
 		$scope.gopData = response.data;
 	})
@@ -336,6 +390,12 @@ angular.module('PoliticalApp', ['ui.router', 'ui.bootstrap', 'firebase'])
 	$http.get('data/2016-california-democratic-presidential-primary.json').then(function(response){
 		$scope.demCA = response.data;
 		console.log($scope.demCA);
+	})
+	$http.get('data/2016-iowa-presidential-republican-primary.json').then(function(response){
+		$scope.gopIA = response.data;
+	})
+	$http.get('data/2016-pennsylvania-democratic-presidential-primary.json').then(function(response){
+		$scope.demPA = response.data;	
 	})
 
 }])
